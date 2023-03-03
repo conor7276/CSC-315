@@ -1,27 +1,13 @@
--- SELECT CategoryName, COUNT(CategoryName), AVG(UnitPrice), MIN(UnitPrice), MAX(UnitPrice), COUNT(CategoryID)
--- FROM Category, Product
--- WHERE UnitsOnOrder > 10
--- ORDER BY CategoryID ASC;
 
---SELECT CategoryName, COUNT(ProductName)
---FROM Category, Product
---WHERE Category.ID = Product.CategoryID;
-
--- SELECT Category.Id, Category.CategoryName, Product.Id, Product.ProductName
--- FROM Category, Product
--- WHERE Category.ID = Product.CategoryID;
-
--- SELECT ProductName, COUNT(ProductName)
--- FROM(
---     SELECT Category.Id, Category.CategoryName, Product.Id, Product.ProductName, Product.CategoryId
---     FROM Category, Product
---     WHERE Category.Id = Product.CategoryId)
--- WHERE Product.CategoryId = Category.Id
-
--- SELECT Category.Id AS CID, Category.CategoryName AS CNAME, Product.Id AS PID, Product.ProductName AS PNAME
--- FROM Category, Product
--- WHERE CID = Product.CategoryID;
-
-SELECT Category.CategoryName, COUNT(Product.ProductName)
+SELECT Category.CategoryName, COUNT(Product.Id), ROUND(AVG(Product.UnitPrice),2), MIN(Product.UnitPrice), MAX(Product.UnitPrice), SUM(Product.UnitsOnOrder)
 FROM Category, Product
-WHERE Category.Id = Product.CategoryID;
+WHERE Category.ID = Product.CategoryID
+GROUP BY Category.ID
+HAVING COUNT(Product.ID) > 10;
+
+
+-- C:\Users\conor\OneDrive\Desktop\school\2023 Spring\CSC-315\Homework\Homework5>sqlite3 northwind.db ".read hw5.sql"
+-- Beverages|12|37.98|4.5|263.5|60
+-- Condiments|12|23.06|10|43.9|170
+-- Confections|13|25.16|9.2|81|180
+-- Seafood|12|20.68|6|62.5|120
